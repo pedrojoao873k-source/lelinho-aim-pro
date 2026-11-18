@@ -1,65 +1,37 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080808">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Lelinho Aim Pro">
-<link rel="manifest" href="manifest.webmanifest">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="LELINHO AIM PRO">
 <title>LELINHO AIM PRO</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root{color-scheme:dark;--bg:#080808;--panel:#171717;--line:#414141;--white:#f7f7f7;--muted:#aaa}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#252525 0,#080808 55%);color:var(--white);font:16px system-ui,-apple-system,sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}
-main{max-width:720px;margin:auto;padding:18px 0 30px}.brand{text-align:center;letter-spacing:2px;font-weight:950;font-size:clamp(26px,7vw,42px);text-shadow:0 0 18px #aaa}.sub{text-align:center;color:var(--muted);font-size:11px;letter-spacing:3px;margin:4px 0 16px}
-.hero{width:100%;max-height:245px;object-fit:cover;object-position:center 25%;border:1px solid #777;border-radius:16px;filter:grayscale(1);box-shadow:0 0 22px #5555}
-.panel{background:linear-gradient(145deg,#1c1c1c,#0d0d0d);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 8px 25px #0008}
-h2{font-size:16px;letter-spacing:1px;margin:0 0 13px}label{display:flex;justify-content:space-between;gap:12px;margin:13px 0 5px;font-size:14px}.num{font-variant-numeric:tabular-nums;font-weight:800}
-input[type=range]{width:100%;accent-color:white}
-.segment{display:flex;gap:8px}.segment button,.action{border:1px solid #777;background:#111;color:white;border-radius:11px;padding:12px;font-weight:750;flex:1}.segment button.active,.action{background:#f5f5f5;color:#080808}
-button{cursor:pointer}.action{width:100%;margin-top:12px;font-size:15px}.secondary{background:#111;color:#fff;border:1px solid #777}
-.note{color:#aaa;font-size:12px;line-height:1.5}.target{height:118px;border:1px dashed #888;border-radius:12px;display:grid;place-items:center;background:repeating-linear-gradient(0deg,#ffffff08 0 1px,transparent 1px 24px);margin:12px 0}.cross{font-size:54px;color:#fff;text-shadow:0 0 12px #fff}.status{text-align:center;color:#ddd;font-size:13px;min-height:20px;margin-top:8px}
-footer{text-align:center;color:#888;font-size:11px;padding:18px 0}
-</style>
-</head>
-<body>
-<main>
-  <div class="brand">LELINHO AIM PRO</div>
-  <div class="sub">BLACK & WHITE • AIM TRAINING</div>
-  <img class="hero" src="gojo-art.png" alt="Arte de anime em preto e branco">
-  <section class="panel">
-    <h2>01 / SEU DISPOSITIVO</h2>
-    <div class="segment">
-      <button id="iphone" class="active" type="button">iPhone</button>
-      <button id="android" type="button">Android</button>
-    </div>
-    <p class="note" id="device-note">Ajuste os controles de treino conforme a resposta do seu aparelho.</p>
-  </section>
-  <section class="panel">
-    <h2>02 / CALIBRAÇÃO DE TREINO</h2>
-    <div id="sliders"></div>
-    <button class="action secondary" id="reset" type="button">RESTAURAR AJUSTES</button>
-  </section>
-  <section class="panel">
-    <h2>03 / TREINO DE PRECISÃO</h2>
-    <p class="note">Use o alvo abaixo para praticar movimentos curtos e controle da mira. Isto não altera nem controla o Free Fire.</p>
-    <div class="target"><div class="cross">⌖</div></div>
-    <button class="action" id="start" type="button">INICIAR TREINO</button>
-    <div class="status" id="status" aria-live="polite">Pronto para treinar.</div>
-  </section>
-  <footer>FOCO • TREINO • EVOLUÇÃO<br>Ferramenta independente de treinamento. Não é afiliada à Garena.</footer>
-</main>
-<script>
-const defaults=[["Sensibilidade geral",90],["Red Dot",85],["Mira 2x",75],["Puxada de mira",70]];
-const root=document.getElementById("sliders");
-function draw(){root.innerHTML="";defaults.forEach(([name,initial],i)=>{let value=localStorage.getItem("lap-"+i);if(value===null)value=initial;let wrap=document.createElement("div");let label=document.createElement("label");let title=document.createElement("span");title.textContent=name;let number=document.createElement("span");number.className="num";number.textContent=value;label.append(title,number);let input=document.createElement("input");input.type="range";input.min=0;input.max=100;input.value=value;input.setAttribute("aria-label",name);input.addEventListener("input",()=>{number.textContent=input.value;localStorage.setItem("lap-"+i,input.value)});wrap.append(label,input);root.append(wrap)})}
-draw();
-const iphone=document.getElementById("iphone"),android=document.getElementById("android"),note=document.getElementById("device-note");
-function device(which){iphone.classList.toggle("active",which==="iPhone");android.classList.toggle("active",which==="Android");localStorage.setItem("lap-device",which);note.textContent=which==="iPhone"?"Perfil selecionado: iPhone. Ajuste os controles conforme sua resposta no treino.":"Perfil selecionado: Android. Ajuste os controles conforme sua resposta no treino."}
-device(localStorage.getItem("lap-device")||"iPhone");iphone.onclick=()=>device("iPhone");android.onclick=()=>device("Android");
-document.getElementById("reset").onclick=()=>{defaults.forEach((x,i)=>localStorage.removeItem("lap-"+i));draw();document.getElementById("status").textContent="Ajustes restaurados."};
-let running=false;document.getElementById("start").onclick=()=>{running=!running;document.getElementById("start").textContent=running?"ENCERRAR TREINO":"INICIAR TREINO";document.getElementById("status").textContent=running?"Treino iniciado: pratique movimentos curtos e controlados.":"Treino encerrado. Bom trabalho!"};
-if("serviceWorker" in navigator && location.protocol.startsWith("http")){navigator.serviceWorker.register("./sw.js").catch(()=>{});}
-</script>
-</body></html>
+:root{color-scheme:dark;--bg:#080808;--panel:#151515;--line:#333;--white:#f5f5f5;--muted:#aaa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#292929 0,#080808 55%);color:var(--white);font:16px system-ui,-apple-system,sans-serif;min-height:100vh}
+main{width:min(760px,100%);margin:auto;padding:22px 18px 38px}.hero{display:block;width:142px;height:142px;object-fit:cover;border-radius:50%;border:2px solid #eee;margin:8px auto 14px;box-shadow:0 0 28px #ffffff30}
+h1{text-align:center;font-size:clamp(25px,6vw,36px);letter-spacing:2px;margin:0}.sub{text-align:center;color:var(--muted);margin:7px 0 22px;font-size:13px;letter-spacing:1px}
+.panel{background:#151515eF;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 10px 30px #0008}.panel h2{font-size:17px;margin:0 0 14px}.field{margin:17px 0}.field-top{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-bottom:8px}.value{font-weight:700;color:#fff}input[type=range]{width:100%;accent-color:#eee}select{width:100%;padding:13px;border-radius:12px;background:#090909;color:#fff;border:1px solid #444;font-size:16px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{flex:1;min-width:130px;border:1px solid #eee;border-radius:12px;padding:14px;background:#f4f4f4;color:#080808;font-weight:800;font-size:15px}.btn.secondary{background:#111;color:#fff;border-color:#555}.status{text-align:center;color:#bbb;font-size:13px;min-height:20px;margin-top:12px}.note{font-size:12px;line-height:1.5;color:#999;text-align:center;margin:20px 6px}
+</style></head><body><main>
+<img class="hero" src="gojo-art.png" alt="Arte em preto e branco inspirada em anime">
+<h1>LELINHO AIM PRO</h1><p class="sub">PAINEL DE TREINO • CALIBRAÇÃO MANUAL</p>
+<section class="panel"><h2>Seu dispositivo</h2><select id="device"><option value="iphone">iPhone</option><option value="android">Android</option></select></section>
+<section class="panel"><h2>Configurações de treino</h2>
+<div class="field"><div class="field-top"><label for="geral">Sensibilidade geral</label><span class="value" id="geralV">90</span></div><input id="geral" type="range" min="0" max="200" value="90"></div>
+<div class="field"><div class="field-top"><label for="red">Ponto vermelho</label><span class="value" id="redV">85</span></div><input id="red" type="range" min="0" max="200" value="85"></div>
+<div class="field"><div class="field-top"><label for="scope2">Mira 2x</label><span class="value" id="scope2V">80</span></div><input id="scope2" type="range" min="0" max="200" value="80"></div>
+<div class="field"><div class="field-top"><label for="scope4">Mira 4x</label><span class="value" id="scope4V">75</span></div><input id="scope4" type="range" min="0" max="200" value="75"></div>
+<div class="field"><div class="field-top"><label for="awp">Mira AWM</label><span class="value" id="awpV">50</span></div><input id="awp" type="range" min="0" max="200" value="50"></div>
+<div class="field"><div class="field-top"><label for="free">Olhadinha</label><span class="value" id="freeV">70</span></div><input id="free" type="range" min="0" max="200" value="70"></div>
+<div class="actions"><button class="btn secondary" id="reset">RESTAURAR</button><button class="btn" id="practice">INICIAR TREINO</button></div><div class="status" id="status">Ajuste os controles para praticar.</div>
+</section><p class="note">Ferramenta de treino e anotação. Ela não altera configurações do Free Fire, não interage com o jogo e não automatiza mira. Ajuste os valores manualmente nas configurações do seu aparelho/jogo.</p>
+</main><script>
+const ids=['geral','red','scope2','scope4','awp','free'];
+ids.forEach(id=>{const el=document.getElementById(id),out=document.getElementById(id+'V');el.addEventListener('input',()=>out.textContent=el.value)});
+document.getElementById('reset').addEventListener('click',()=>{[90,85,80,75,50,70].forEach((v,i)=>{let e=document.getElementById(ids[i]);e.value=v;document.getElementById(ids[i]+'V').textContent=v});document.getElementById('status').textContent='Valores restaurados.'});
+let active=false;document.getElementById('practice').addEventListener('click',e=>{active=!active;e.target.textContent=active?'ENCERRAR TREINO':'INICIAR TREINO';document.getElementById('status').textContent=active?'Treino iniciado. Faça seus ajustes manualmente no jogo.':'Treino encerrado.'});
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
