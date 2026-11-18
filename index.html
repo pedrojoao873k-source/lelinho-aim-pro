@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080808"><meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="LELINHO AIM PRO">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LELINHO AIM PRO">
 <title>LELINHO AIM PRO</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -13,9 +16,17 @@
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#292929 0,#080808 55%);color:var(--white);font:16px system-ui,-apple-system,sans-serif;min-height:100vh}
 main{width:min(760px,100%);margin:auto;padding:22px 18px 38px}.hero{display:block;width:142px;height:142px;object-fit:cover;border-radius:50%;border:2px solid #eee;margin:8px auto 14px;box-shadow:0 0 28px #ffffff30}
 h1{text-align:center;font-size:clamp(25px,6vw,36px);letter-spacing:2px;margin:0}.sub{text-align:center;color:var(--muted);margin:7px 0 22px;font-size:13px;letter-spacing:1px}
-.panel{background:#151515eF;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 10px 30px #0008}.panel h2{font-size:17px;margin:0 0 14px}.field{margin:17px 0}.field-top{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-bottom:8px}.value{font-weight:700;color:#fff}input[type=range]{width:100%;accent-color:#eee}select{width:100%;padding:13px;border-radius:12px;background:#090909;color:#fff;border:1px solid #444;font-size:16px}
+.panel{background:#151515ef;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 10px 30px #0008}.panel h2{font-size:17px;margin:0 0 14px}.field{margin:17px 0}.field-top{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-bottom:8px}.value{font-weight:700;color:#fff}input[type=range]{width:100%;accent-color:#eee}select{width:100%;padding:13px;border-radius:12px;background:#090909;color:#fff;border:1px solid #444;font-size:16px}
 .actions{display:flex;gap:10px;flex-wrap:wrap}.btn{flex:1;min-width:130px;border:1px solid #eee;border-radius:12px;padding:14px;background:#f4f4f4;color:#080808;font-weight:800;font-size:15px}.btn.secondary{background:#111;color:#fff;border-color:#555}.status{text-align:center;color:#bbb;font-size:13px;min-height:20px;margin-top:12px}.note{font-size:12px;line-height:1.5;color:#999;text-align:center;margin:20px 6px}
-</style></head><body><main>
+.hud-stage{position:relative;width:100%;aspect-ratio:16/9;min-height:190px;overflow:hidden;border:2px solid #777;border-radius:14px;background:radial-gradient(ellipse at center,#383838,#101010 70%);touch-action:pan-y}
+.hud-stage:before{content:"";position:absolute;inset:8%;border:1px dashed #ffffff35;border-radius:8px}
+.hud-btn{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid #ffffffbb;border-radius:50%;width:clamp(48px,13vw,72px);height:clamp(48px,13vw,72px);font-size:clamp(9px,2.5vw,12px);font-weight:800;color:white;text-shadow:0 1px 3px #000;box-shadow:0 3px 12px #0009;user-select:none}
+.hud-fire{left:8%;top:13%;background:#c62828}.hud-move{left:7%;bottom:12%;background:#1565c0;width:clamp(62px,17vw,90px);height:clamp(62px,17vw,90px)}
+.hud-aim{right:8%;top:13%;background:#ef6c00}.hud-jump{right:9%;bottom:13%;background:#2e7d32}.hud-crouch{right:29%;bottom:9%;background:#6a1b9a;width:clamp(42px,11vw,62px);height:clamp(42px,11vw,62px)}
+.hud-label{position:absolute;left:36%;top:44%;color:#aaa;font-size:clamp(10px,2.8vw,14px);text-align:center}
+.small-note{color:#aaa;font-size:12px;line-height:1.5;margin:12px 2px 0}
+</style></head>
+<body><main>
 <img class="hero" src="gojo-art.png" alt="Arte em preto e branco inspirada em anime">
 <h1>LELINHO AIM PRO</h1><p class="sub">PAINEL DE TREINO • CALIBRAÇÃO MANUAL</p>
 <section class="panel"><h2>Seu dispositivo</h2><select id="device"><option value="iphone">iPhone</option><option value="android">Android</option></select></section>
@@ -27,8 +38,17 @@ h1{text-align:center;font-size:clamp(25px,6vw,36px);letter-spacing:2px;margin:0}
 <div class="field"><div class="field-top"><label for="awp">Mira AWM</label><span class="value" id="awpV">50</span></div><input id="awp" type="range" min="0" max="200" value="50"></div>
 <div class="field"><div class="field-top"><label for="free">Olhadinha</label><span class="value" id="freeV">70</span></div><input id="free" type="range" min="0" max="200" value="70"></div>
 <div class="actions"><button class="btn secondary" id="reset">RESTAURAR</button><button class="btn" id="practice">INICIAR TREINO</button></div><div class="status" id="status">Ajuste os controles para praticar.</div>
-</section><p class="note">Ferramenta de treino e anotação. Ela não altera configurações do Free Fire, não interage com o jogo e não automatiza mira. Ajuste os valores manualmente nas configurações do seu aparelho/jogo.</p>
-</main><script>
+</section>
+<section class="panel" id="hud3"><h2>🔥 HUD DE 3 DEDOS — IPHONE</h2>
+<p class="small-note">Prévia de posicionamento dos botões. Use como referência e ajuste manualmente no editor de HUD do Free Fire.</p>
+<div class="hud-stage" aria-label="Prévia visual de HUD de três dedos">
+<span class="hud-btn hud-fire">ATIRAR</span><span class="hud-btn hud-move">MOVER</span><span class="hud-btn hud-aim">MIRA</span><span class="hud-btn hud-jump">PULAR</span><span class="hud-btn hud-crouch">AGACHAR</span><span class="hud-label">ÁREA DE JOGO</span>
+</div>
+<p class="small-note">Sugestão: polegar esquerdo para movimentar, polegar direito para mirar e indicador esquerdo para atirar. A posição e o tamanho podem ser ajustados dentro do jogo.</p>
+</section>
+<p class="note">Ferramenta de treino e anotação. Ela não altera configurações do Free Fire, não interage com o jogo e não automatiza mira. Ajuste os valores manualmente nas configurações do seu aparelho/jogo.</p>
+</main>
+<script>
 const ids=['geral','red','scope2','scope4','awp','free'];
 ids.forEach(id=>{const el=document.getElementById(id),out=document.getElementById(id+'V');el.addEventListener('input',()=>out.textContent=el.value)});
 document.getElementById('reset').addEventListener('click',()=>{[90,85,80,75,50,70].forEach((v,i)=>{let e=document.getElementById(ids[i]);e.value=v;document.getElementById(ids[i]+'V').textContent=v});document.getElementById('status').textContent='Valores restaurados.'});
